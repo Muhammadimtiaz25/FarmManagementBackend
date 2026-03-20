@@ -97,8 +97,20 @@ const options = {
 
 const specs = swaggerJsdoc(options);
 
+// Swagger UI options with Vercel Analytics integration
+const swaggerOptions = {
+  customSiteTitle: 'Farm Management API',
+  customJs: [
+    'https://cdn.vercel-insights.com/v1/script.js'
+  ],
+  customJsStr: `
+    // Initialize Vercel Web Analytics
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  `
+};
+
 function setupSwagger(app) {
-  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(specs));
+  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(specs, swaggerOptions));
 }
 
 module.exports = setupSwagger;
