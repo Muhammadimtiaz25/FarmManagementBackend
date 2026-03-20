@@ -2,7 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors'); 
 const connectDB = require('./database');
-const setupSwagger = require('./swagger');  
+const setupSwagger = require('./swagger');
+const injectAnalyticsScript = require('./middleware/analytics');
 
 // Routes
 const engineerRoutes = require("./routes/admin/engineer");
@@ -32,6 +33,9 @@ app.use(cors({
 }));
 
 app.use(express.json());
+
+/* Vercel Analytics Middleware */
+app.use(injectAnalyticsScript);
 
 /* DB & Swagger */
 connectDB();
